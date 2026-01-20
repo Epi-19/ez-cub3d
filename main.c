@@ -22,13 +22,28 @@ int	key_press(int keycode, void *param)
 	}
 	return (0);
 }
-
+int check_args(int argc, char **argv)
+{
+	if (argc != 2)
+	{
+		ft_putstr_fd("Error\nInvalid number of arguments\n", 2);
+		return (1);
+	}
+	if (ft_strncmp(&argv[1][ft_strlen(argv[1]) - 4], ".cub", 4) != 0)
+	{
+		ft_putstr_fd("Error\nInvalid file extension\n", 2);
+		return (1);
+	}
+	return (0);
+}
 int	main(int argc, char **argv)
 {
 	t_data	data;
 
-	(void)argc;
-	(void)argv;
+	if (check_args(argc, argv) != 0)
+		return (1);
+	if(ft_parsing(argv[1], &data) != 0)
+		return (1);
 	ft_memset(&data, 0, sizeof(t_data));
 	data.floor_color = -1;
 	data.ceiling_color = -1;

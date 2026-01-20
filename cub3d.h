@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rodantec <rodantec@student.s19.be>         +#+  +:+       +#+        */
+/*   By: rodebacq <rodebacq@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 02:23:39 by rodebacq          #+#    #+#             */
-/*   Updated: 2026/01/20 10:58:53 by rodantec         ###   ########.fr       */
+/*   Updated: 2026/01/20 11:28:47 by rodebacq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <fcntl.h>
 # include <string.h>
 # include <math.h>
+# include <limits.h>
 
 # define WINDOW_WIDTH       1200
 # define WINDOW_HEIGHT      800
@@ -35,6 +36,26 @@
 
 # define MOVE_SPEED         0.03
 # define ROT_SPEED          0.03
+
+
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 1
+# endif
+
+# if BUFFER_SIZE > 2147483646
+#  undef BUFFER_SIZE
+#  define BUFFER_SIZE 1
+# endif
+
+char	*ft_read_to_left_str(int fd, char *str);
+char	*get_next_line(int fd);
+char	*ft_cut_str(char *str);
+char	*ft_get_line(char *str);
+char	*ft_strjoin_free(char *s1, char *s2);
+char	*ft_strchr(const char *s, int c);
+size_t	ft_strlen(char *str);
+char	*ft_strdup(char *s);
+
 
 typedef struct s_map
 {
@@ -70,7 +91,8 @@ typedef struct s_data
 int     init_mlx(t_mlx *mlx);
 void	destroy_mlx(t_mlx *mlx);
 
-int	load_map(const char *filename, t_data *data);
+//parsing.c
 
+//getline.c
 
 #endif
