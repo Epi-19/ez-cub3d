@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rodebacq <rodebacq@student.s19.be>         +#+  +:+       +#+        */
+/*   By: rodantec <rodantec@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 02:23:39 by rodebacq          #+#    #+#             */
-/*   Updated: 2025/11/07 02:46:17 by rodebacq         ###   ########.fr       */
+/*   Updated: 2026/01/20 10:35:39 by rodantec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,6 @@
 
 # define MOVE_SPEED         0.03
 # define ROT_SPEED          0.03
-# define COLLISION_MARGIN   0.2
-
-# define SUCCESS            0
-# define FAILURE            1
 
 typedef struct s_map
 {
@@ -74,6 +70,7 @@ typedef struct s_data
 int     init_mlx(t_mlx *mlx);
 void	destroy_mlx(t_mlx *mlx);
 
+int	load_map(const char *filename, t_data *data);
 
 
 #endif

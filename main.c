@@ -14,6 +14,4 @@ int	main(int argc, char **argv)
 		return (1);
     if (load_map(argv[1], &data) == -1)
 		return (printf("Error: failed to load map\n"), 1);
-    
-	
 }
