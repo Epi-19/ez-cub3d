@@ -6,7 +6,7 @@
 /*   By: rodantec <rodantec@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 02:23:39 by rodebacq          #+#    #+#             */
-/*   Updated: 2026/01/20 10:58:53 by rodantec         ###   ########.fr       */
+/*   Updated: 2026/01/20 11:49:37 by rodantec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,20 @@ typedef struct s_data
 	int		floor_color;
 	int		ceiling_color;
 }	t_data;
+
+typedef struct s_player
+{
+	double x;
+	double y;
+	char direction;
+} t_player;
+
+typedef struct s_ray
+{
+	double dirX;
+	double dirY;
+} t_ray;
+
 
 // mlx_utils.c
 int     init_mlx(t_mlx *mlx);
