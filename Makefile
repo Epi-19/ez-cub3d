@@ -2,7 +2,7 @@ CC = gcc
 CFLAGS = -Wall -Wextra -Werror -Iminilibx-linux -O3 -g -Ilibft
 LDFLAGS = -Lminilibx-linux -lmlx -lXext -lX11 -lm
 
-SRCS = main.c parsing.c raycasting.c free_all.c keypress.c init.c raycasting_draw.c textures_init.c move.c rotate.c wall_texture.c utils_string.c render.c texture_buffer.c
+SRCS = main.c mlx_utils.c
 
 OBJS = $(SRCS:.c=.o)
 
@@ -26,7 +26,6 @@ $(NAME): $(OBJS) $(LIBFT)
 
 clean:
 	@rm -f $(OBJS)
-	@make -C minilibx-linux clean
 	@echo "Cleaned object files."
 
 fclean: clean
