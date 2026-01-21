@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rodantec <rodantec@student.s19.be>         +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 02:23:39 by rodebacq          #+#    #+#             */
-/*   Updated: 2026/01/20 11:49:37 by rodantec         ###   ########.fr       */
+/*   Updated: 2026/01/21 22:10:34 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,13 @@ typedef struct s_mlx
     t_img	img;
 }   t_mlx;
 
+typedef struct s_player
+{
+	double	x;
+	double	y;
+	char	direction;
+} t_player;
+
 typedef struct s_data
 {
 	t_mlx	mlx;
@@ -66,17 +73,20 @@ typedef struct s_data
 	int		ceiling_color;
 }	t_data;
 
-typedef struct s_player
-{
-	double x;
-	double y;
-	char direction;
-} t_player;
-
 typedef struct s_ray
 {
-	double dirX;
-	double dirY;
+	double	posX;
+	double	posY;
+	double	dirX;
+	double	dirY;
+	int	mapX;
+	int	mapY;
+	int	stepX;
+	int	stepY;
+	double	distToNextVertical;
+	double	distToNextHorizontal;
+	double	distToVerticalBorder;
+	double	distToHorizontalBorder;
 } t_ray;
 
 
