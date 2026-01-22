@@ -2,7 +2,7 @@ CC = gcc
 CFLAGS = -Wall -Wextra -Werror -Iminilibx-linux -O3 -g -Ilibft
 LDFLAGS = -Lminilibx-linux -lmlx -lXext -lX11 -lm
 
-SRCS = main.c mlx_utils.c render.c raycasting.c init_player.c parsing.c texture.c move.c
+SRCS = main.c mlx_utils.c render.c raycasting.c init_player.c parsing.c texture.c move.c rotate.c
 
 OBJS = $(SRCS:.c=.o)
 

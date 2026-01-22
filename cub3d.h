@@ -100,6 +100,12 @@ typedef struct s_data
 	t_player	player;
 	int		floor_color;
 	int		ceiling_color;
+	int key_w ;
+	int key_s ;
+	int key_a ;
+	int key_d ;
+	int key_left ;
+	int key_right ;
 }	t_data;
 
 typedef struct s_ray
@@ -133,5 +139,9 @@ void player_pos_dir(t_map *map, t_player *player) ;
 int load_all_textures(void *mlx_ptr, t_textures *textures, t_map *map);
 int load_texture(void *mlx_ptr, t_texture *tex, char *path);
 void move_w(t_player *player,t_map *map) ;
-
+int moves(t_data *data) ;
+int key_release(int keycode, t_data *data) ;
+int key_press(int keycode, t_data *data) ;
+void rotate_left(t_player *player);
+void rotate_right(t_player *player);
 #endif
