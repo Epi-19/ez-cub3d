@@ -38,7 +38,6 @@ void dda_alg(t_player *player, t_ray *ray, t_map *map)
         ray->distToNextVertical = 2147483647;
     else
         ray->distToNextVertical = fabs(1 / ray->dirX);
-
     if (ray->dirY == 0)
         ray->distToNextHorizontal = 2147483647;
     else
@@ -66,3 +65,31 @@ void dda_alg(t_player *player, t_ray *ray, t_map *map)
     }
 }
 
+void dda_loop(t_ray *ray, t_map *map)
+{
+    int border;
+    double perpWallDist;
+
+    while (1)
+    {
+        if (ray->distToVerticalBorder < ray->distToHorizontalBorder)
+        {
+            ray->distToVerticalBorder += ray->distToNextVertical;
+            ray->mapX += ray->stepX;
+            border = 0;
+        }
+        else
+        {
+            ray->distToHorizontalBorder += ray->distToNextHorizontal;
+            ray->mapY += ray->stepY;
+            border = 1;
+        }
+        if (map->grid[ray->mapY][ray->mapX] == 1)
+            break;
+    }
+    if (border == 0)
+        perpWallDist = (ray->mapX - ray->posX + (1 - ray->stepX) / 2) / ray->dirX;
+    else
+        perpWallDist = (ray->mapY - ray->posY + (1 - ray->stepY) / 2) / ray->dirY;
+    ray->perpWallDist = perpWallDist;
+}
