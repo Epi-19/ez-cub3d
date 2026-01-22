@@ -41,7 +41,29 @@ typedef struct s_map
     char	**grid;
     int		width;
     int		height;
+	char    *north_tex_path;
+    char    *south_tex_path;
+    char    *east_tex_path;
+    char    *west_tex_path;
 }	t_map;
+typedef struct s_texture
+{
+	void	*img;
+	char	*addr;
+	int		width;
+	int		height;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+}	t_texture;
+
+typedef struct s_textures
+{
+	t_texture	north;
+	t_texture	south;
+	t_texture	east;
+	t_texture	west;
+}	t_textures;
 typedef struct s_img
 {
 	void	*ptr;
@@ -63,12 +85,19 @@ typedef struct s_player
 	double	x;
 	double	y;
 	char	direction;
+	double	dirX;
+	double	dirY;
+	double	planeX;
+	double	planeY;
 } t_player;
+
 
 typedef struct s_data
 {
 	t_mlx	mlx;
 	t_map	map;
+	t_textures	textures;
+	t_player	player;
 	int		floor_color;
 	int		ceiling_color;
 }	t_data;
@@ -79,22 +108,30 @@ typedef struct s_ray
 	double	posY;
 	double	dirX;
 	double	dirY;
-	int	mapX;
-	int	mapY;
-	int	stepX;
-	int	stepY;
+	int		mapX;
+	int		mapY;
+	int		stepX;
+	int		stepY;
 	double	distToNextVertical;
 	double	distToNextHorizontal;
 	double	distToVerticalBorder;
 	double	distToHorizontalBorder;
+	double	perpWallDist;
+	int		hitSide;
 } t_ray;
 
 
-// mlx_utils.c
 int     init_mlx(t_mlx *mlx);
 void	destroy_mlx(t_mlx *mlx);
 
 int	load_map(const char *filename, t_data *data);
-
+void init_player_plane(t_player *player) ;
+void my_mlx_pixel_put(t_img *img, int x, int y, int color) ;
+void cast_rays(t_data *data, t_player *player) ;
+void player_dir_to_vector(t_player *player, t_ray *ray) ;
+void player_pos_dir(t_map *map, t_player *player) ;
+int load_all_textures(void *mlx_ptr, t_textures *textures, t_map *map);
+int load_texture(void *mlx_ptr, t_texture *tex, char *path);
+void move_w(t_player *player,t_map *map) ;
 
 #endif
