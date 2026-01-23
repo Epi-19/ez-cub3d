@@ -26,29 +26,26 @@ int	before_map(char **file, t_data *data)
 	int	i;
 
 	i = 0;
-	while (file[i])
+	while (file[i++])
 	{
-		if (is_line_empty(file[i]))
-		{
-			i++;
+		if (is_line_empty(file[i++]))
 			continue;
-		}
 		else if (file[i][0] == 'F' && file[i][1] == ' ')
 			parse_color(file[i] + 2, data, 'F');
 		else if (file[i][0] == 'C' && file[i][1] == ' ')
 			parse_color(file[i] + 2, data, 'C');
-		else if (!ft_strncmp(file[i], "NO ", 3))
-			parse_texture(file[i] + 3, &data->no, &data->has_no, data);
-		else if (!ft_strncmp(file[i], "SO ", 3))
-			parse_texture(file[i] + 3, &data->so, &data->has_so, data);
-		else if (!ft_strncmp(file[i], "WE ", 3))
-			parse_texture(file[i] + 3, &data->we, &data->has_we, data);
-		else if (!ft_strncmp(file[i], "EA ", 3))
-			parse_texture(file[i] + 3, &data->ea, &data->has_ea, data);
+		else if (!ft_strncmp(file[i], "NO", 2))
+			parse_texture(file[i] + 2, &data->no, &data->has_no, data);
+		else if (!ft_strncmp(file[i], "SO", 2))
+			parse_texture(file[i] + 2, &data->so, &data->has_so, data);
+		else if (!ft_strncmp(file[i], "WE", 2))
+			parse_texture(file[i] + 2, &data->we, &data->has_we, data);
+		else if (!ft_strncmp(file[i], "EA", 2))
+			parse_texture(file[i] + 2, &data->ea, &data->has_ea, data);
 		else
 			break; // 👉 ici seulement : début de la map
-		i++;
 	}
+	check_config_complete(data);
 	return (i);
 }
 

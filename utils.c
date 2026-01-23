@@ -22,7 +22,7 @@ void error(char *msg, t_data *data, char **file)
         free(data->so);
         free(data->we);
         free(data->ea);
-        // MLX/map simalloc
+        // mlx ou map simalloc
     }
 
     exit(1);

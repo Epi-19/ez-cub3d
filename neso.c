@@ -24,6 +24,9 @@ void	parse_texture(char *line, char **dest, int *flag, t_data *data)
 		error("Texture en double", data, NULL);
 
 	/* trim espaces + tab + newline */
+	if(line[0] != ' ')
+		error("Mauvais format de texture", data, NULL);
+
 	path = ft_strtrim(line, " \t\n");
 	if (!path || path[0] == '\0')
 		error("Chemin de texture invalide", data, NULL);
