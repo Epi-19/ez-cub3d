@@ -26,10 +26,13 @@ int	before_map(char **file, t_data *data)
 	int	i;
 
 	i = 0;
-	while (file[i++])
+	while (file[i])
 	{
-		if (is_line_empty(file[i++]))
+		if (is_line_empty(file[i]))
+		{
+			i++;
 			continue;
+		}
 		else if (file[i][0] == 'F' && file[i][1] == ' ')
 			parse_color(file[i] + 2, data, 'F');
 		else if (file[i][0] == 'C' && file[i][1] == ' ')
@@ -42,8 +45,11 @@ int	before_map(char **file, t_data *data)
 			parse_texture(file[i] + 2, &data->we, &data->has_we, data);
 		else if (!ft_strncmp(file[i], "EA", 2))
 			parse_texture(file[i] + 2, &data->ea, &data->has_ea, data);
-		else
-			break; // 👉 ici seulement : début de la map
+		else if(data->has_floor == 1 && data->has_ceiling == 1
+			&& data->has_no == 1&& data->has_so ==1
+			&& data->has_we==1 && data->has_ea == 1)
+			break;
+		i++;
 	}
 	check_config_complete(data);
 	return (i);
@@ -73,6 +79,8 @@ int ft_parsing(char *path, t_data *data)
 	if (!file)
 		return (ft_putstr_fd("Error\nFailed to read file\n", 2), 1);
 	data->map_start = before_map(file, data);
+	// la suite pour la map
+	
 	free_tab(file);
 	return (0);
 }
