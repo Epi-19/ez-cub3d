@@ -6,7 +6,7 @@
 /*   By: rodebacq <rodebacq@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 16:24:22 by Rodebacq          #+#    #+#             */
-/*   Updated: 2026/01/20 11:22:49 by rodebacq         ###   ########.fr       */
+/*   Updated: 2026/01/22 15:26:00 by rodebacq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,16 +28,6 @@ char	*ft_strchr(const char *s, int c)
 	if ((char)c == '\0')
 		return ((char *)&s[i]);
 	return (NULL);
-}
-
-size_t	ft_strlen(char *str)
-{
-	size_t	i;
-
-	i = 0;
-	while (str[i])
-		i++;
-	return (i);
 }
 
 char	*ft_strjoin_free(char *s1, char *s2)
@@ -95,22 +85,4 @@ char	*ft_get_line(char *str)
 	return (res);
 }
 
-char	*ft_strdup(char *s)
-{
-	char	*dup;
-	size_t	len;
-	size_t	i;
 
-	i = 0;
-	len = ft_strlen(s);
-	dup = malloc((len + 1) * sizeof(char));
-	if (dup == NULL)
-		return (NULL);
-	while (i < len)
-	{
-		dup[i] = s[i];
-		i++;
-	}
-	dup[i] = '\0';
-	return (dup);
-}

@@ -1,38 +1,30 @@
+NAME = test_parser
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -Iminilibx-linux -O3 -g -Ilibft
-LDFLAGS = -Lminilibx-linux -lmlx -lXext -lX11 -lm
+CFLAGS = -Wall -Wextra -Werror -g -Ilibft -Iincludes
 
-SRCS = main.c mlx_utils.c
-
-OBJS = $(SRCS:.c=.o)
-
-NAME = cub3d
-LIBFT_DIR = libft
-LIBFT = $(LIBFT_DIR)/libft.a
-CFLAGS += -I$(LIBFT_DIR)
+SRC = main.c parsing.c neso.c updown.c utils.c getline.c get_next_line.c get_next_line_utils.c # ajoute tous tes fichiers parsing ici
+OBJ = $(SRC:.c=.o)
+LIBFT = libft/libft.a
 
 all: $(NAME)
 
-$(LIBFT):
-	$(MAKE) -C $(LIBFT_DIR)
-
-$(NAME): $(OBJS) $(LIBFT)
-	@make -C minilibx-linux
-	@$(CC) $(OBJS) $(LIBFT) $(LDFLAGS) -o $(NAME)
-	@echo "cub3d compiled!"
+$(NAME): $(OBJ) $(LIBFT)
+	$(CC) $(OBJ) $(LIBFT) -o $(NAME)
 
 %.o: %.c
-	@$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(LIBFT):
+	$(MAKE) -C libft
 
 clean:
-	@rm -f $(OBJS)
-	@echo "Cleaned object files."
+	rm -f $(OBJ)
+	$(MAKE) -C libft clean
 
 fclean: clean
-	@rm -f $(NAME)
-	@echo "Cleaned executable."
+	rm -f $(NAME)
+	$(MAKE) -C libft fclean
 
 re: fclean all
 
-# Phony targets
 .PHONY: all clean fclean re

@@ -1,41 +1,72 @@
 #include "cub3d.h"
 
-void	parse_color(char *str, t_data *data, char type)
+void	check_config_complete(t_data *data)
 {
-	char	**rgb;
-	int		r;
-	int		g;
-	int		b;
-
-	rgb = ft_split(str, ',');
-	if (!rgb || !rgb[0] || !rgb[1] || !rgb[2] || rgb[3])
-		error("Invalid color format");
-
-	if (!is_number(rgb[0]) || !is_number(rgb[1]) || !is_number(rgb[2]))
-		error("Color is not numeric");
-
-	r = ft_atoi(rgb[0]);
-	g = ft_atoi(rgb[1]);
-	b = ft_atoi(rgb[2]);
-
-	if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255)
-		error("Color out of range");
-	if (type == 'F')
-	
+	if (!data->has_floor || !data->has_ceiling
+		|| !data->has_no || !data->has_so
+		|| !data->has_we || !data->has_ea)
+		error("Configuration incomplète : couleurs ou textures manquantes", data, NULL);
 }
-int before_map(char **file, t_data *data)
-{
-	int i;
 
-	i = 0;
-	while(file[i])
+int	is_line_empty(char *line)
+{
+	int	i = 0;
+
+	while (line[i])
 	{
-		if (file[i][0] == 'F' && file[i][1] == ' ')
-			parse_color(file + 2, data, 'F');
-		else if (file[i][0] == 'C' && file[i][1] == ' ')
-			parse_color(file + 2, data, 'C');
+		if (line[i] != ' ' && line[i] != '\t' && line[i] != '\n')
+			return (0);
 		i++;
 	}
+	return (1);
+}
+
+int	before_map(char **file, t_data *data)
+{
+	int	i;
+
+	i = 0;
+	while (file[i])
+	{
+		if (is_line_empty(file[i]))
+		{
+			i++;
+			continue;
+		}
+		else if (file[i][0] == 'F' && file[i][1] == ' ')
+			parse_color(file[i] + 2, data, 'F');
+		else if (file[i][0] == 'C' && file[i][1] == ' ')
+			parse_color(file[i] + 2, data, 'C');
+		else if (!ft_strncmp(file[i], "NO ", 3))
+			parse_texture(file[i] + 3, &data->no, &data->has_no, data);
+		else if (!ft_strncmp(file[i], "SO ", 3))
+			parse_texture(file[i] + 3, &data->so, &data->has_so, data);
+		else if (!ft_strncmp(file[i], "WE ", 3))
+			parse_texture(file[i] + 3, &data->we, &data->has_we, data);
+		else if (!ft_strncmp(file[i], "EA ", 3))
+			parse_texture(file[i] + 3, &data->ea, &data->has_ea, data);
+		else
+			break; // 👉 ici seulement : début de la map
+		i++;
+	}
+	return (i);
+}
+
+void ft_init_data(t_data *data)
+{
+	data->floor_color = 0;
+	data->ceiling_color = 0;
+	data->has_floor = 0;
+	data->has_ceiling = 0;
+	data->no = NULL;
+	data->so = NULL;
+	data->we = NULL;
+	data->ea = NULL;
+	data->has_no = 0;
+	data->has_so = 0;
+	data->has_we = 0;
+	data->has_ea = 0;
+	data->map_start = 0;
 }
 int ft_parsing(char *path, t_data *data)
 {
@@ -44,8 +75,7 @@ int ft_parsing(char *path, t_data *data)
 	file = read_file(path);
 	if (!file)
 		return (ft_putstr_fd("Error\nFailed to read file\n", 2), 1);
-
-	before_map(file, data);
-	free(file);
+	data->map_start = before_map(file, data);
+	free_tab(file);
 	return (0);
 }

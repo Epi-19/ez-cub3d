@@ -1,27 +1,5 @@
 #include "cub3d.h"
 
-int	close_window(void *param)
-{
-	t_data	*data;
-
-	data = (t_data *)param;
-	destroy_mlx(&data->mlx);
-	exit(0);
-	return (0);
-}
-
-int	key_press(int keycode, void *param)
-{
-	t_data	*data;
-
-	data = (t_data *)param;
-	if (keycode == ESC_KEY)
-	{
-		destroy_mlx(&data->mlx);
-		exit(0);
-	}
-	return (0);
-}
 int check_args(int argc, char **argv)
 {
 	if (argc != 2)
@@ -36,21 +14,45 @@ int check_args(int argc, char **argv)
 	}
 	return (0);
 }
-int	main(int argc, char **argv)
-{
-	t_data	data;
+#include <stdio.h>
+#include "cub3d.h" // ton header avec t_data, prototypes ft_parsing, init_data, etc.
 
-	if (check_args(argc, argv) != 0)
-		return (1);
-	if(ft_parsing(argv[1], &data) != 0)
-		return (1);
-	ft_memset(&data, 0, sizeof(t_data));
-	data.floor_color = -1;
-	data.ceiling_color = -1;
-	if (init_mlx(&data.mlx) != 0)
-		return (1);
-	mlx_hook(data.mlx.win, 17, 0, close_window, &data);
-	mlx_key_hook(data.mlx.win, key_press, &data);
-	mlx_loop(data.mlx.ptr);
-	return (0);
+int main(int argc, char **argv)
+{
+    t_data data;
+
+    if (argc != 2)
+    {
+        printf("Usage: %s <map.cub>\n", argv[0]);
+        return 1;
+    }
+
+    // Initialisation des flags / couleurs / textures
+    ft_init_data(&data);
+
+    // Parsing du fichier
+    if (ft_parsing(argv[1], &data))
+        return 1; // erreur déjà affichée par error()
+
+    // Affichage pour test
+    printf("=== Parsing réussi ===\n");
+
+    printf("Couleur sol : 0x%06X\n", data.floor_color);
+    printf("Couleur plafond : 0x%06X\n", data.ceiling_color);
+
+    printf("Textures :\n");
+    printf("NO: %s\n", data.no ? data.no : "NULL");
+    printf("SO: %s\n", data.so ? data.so : "NULL");
+    printf("WE: %s\n", data.we ? data.we : "NULL");
+    printf("EA: %s\n", data.ea ? data.ea : "NULL");
+
+    printf("Début de la map : ligne %d\n", data.map_start);
+
+    // Free des textures
+    free(data.no);
+    free(data.so);
+    free(data.we);
+    free(data.ea);
+
+    return 0;
 }
