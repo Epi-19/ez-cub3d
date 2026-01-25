@@ -2,7 +2,12 @@ CC = gcc
 CFLAGS = -Wall -Wextra -Werror -Iminilibx-linux -O3 -g -Ilibft
 LDFLAGS = -Lminilibx-linux -lmlx -lXext -lX11 -lm
 
-SRCS = main.c mlx_utils.c render.c raycasting.c init_player.c parsing.c texture.c move.c rotate.c
+SRCS = main.c \
+	player/init.c player/move.c player/rotate.c \
+	parsing/load_map.c player/handle_move.c \
+	mlx/init.c mlx/render.c \
+	raycasting/cast_ray.c raycasting/dda_init.c raycasting/dda_loop.c \
+	raycasting/ray_dir.c raycasting/texture.c
 
 OBJS = $(SRCS:.c=.o)
 
@@ -34,5 +39,4 @@ fclean: clean
 
 re: fclean all
 
-# Phony targets
 .PHONY: all clean fclean re
