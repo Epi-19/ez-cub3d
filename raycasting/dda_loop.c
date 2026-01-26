@@ -32,11 +32,23 @@ int	is_wall_hit(t_ray *ray, t_map *map)
 void	calc_perp_wall_dist(t_ray *ray)
 {
 	if (ray->hit_side == 0)
-		ray->perp_wall_dist = (ray->map_x - ray->pos_x
-				+ (1 - ray->step_x) / 2) / ray->dir_x;
+	{
+		if (ray->dir_x != 0)
+			ray->perp_wall_dist = (ray->map_x - ray->pos_x
+					+ (1 - ray->step_x) / 2) / ray->dir_x;
+		else
+			ray->perp_wall_dist = 2147483647;
+	}
 	else
-		ray->perp_wall_dist = (ray->map_y - ray->pos_y
-				+ (1 - ray->step_y) / 2) / ray->dir_y;
+	{
+		if (ray->dir_y != 0)
+			ray->perp_wall_dist = (ray->map_y - ray->pos_y
+					+ (1 - ray->step_y) / 2) / ray->dir_y;
+		else
+			ray->perp_wall_dist = 2147483647;
+	}
+	if (ray->perp_wall_dist < 0.1)
+		ray->perp_wall_dist = 0.1;
 }
 
 void	dda_loop(t_ray *ray, t_map *map)

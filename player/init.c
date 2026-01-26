@@ -15,8 +15,8 @@ void	player_pos_dir(t_map *map, t_player *player)
 			if (map->grid[i][j] == 'N' || map->grid[i][j] == 'S'
 				|| map->grid[i][j] == 'E' || map->grid[i][j] == 'W')
 			{
-				player->x = j;
-				player->y = i;
+				player->x = j + 0.5;
+				player->y = i + 0.5;
 				player->direction = map->grid[i][j];
 				return ;
 			}
